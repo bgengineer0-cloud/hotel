@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { db } from "../database/db";
 
@@ -13,21 +13,20 @@ const typeColor = {
   "جناح ملكي": "#A855F7", "عائلية": "#F0A030",
 };
 const amenityIcon = { wifi:"📶", tv:"📺", ac:"❄️", minibar:"🍷", jacuzzi:"🛁", kitchen:"🍽️", balcony:"🌅", seaview:"🌊", butler:"🎩" };
-const roomEmoji  = { 1:"🛏️", 2:"🏨", 3:"👑", 4:"🛏️", 5:"🏨", 6:"💎", 7:"👨‍👩‍👧", 8:"🛏️" };
+const roomEmoji   = { 1:"🛏️", 2:"🏨", 3:"👑", 4:"🛏️", 5:"🏨", 6:"💎", 7:"👨‍👩‍👧", 8:"🛏️" };
 
 export default function RoomsPage() {
-  const { user } = useAuth();
-  //const navigate  = useNavigate();
+  const { user }  = useAuth();
   const [statusF, setStatusF] = useState("all");
-  const [typeF, setTypeF]     = useState("all");
-  const [search, setSearch]   = useState("");
-  const [rooms] = useState(db.getAllRooms());
+  const [typeF,   setTypeF]   = useState("all");
+  const [search,  setSearch]  = useState("");
+  const [rooms]               = useState(db.getAllRooms());
 
   const types = [...new Set(rooms.map(r => r.type))];
 
   const filtered = rooms.filter(r => {
     if (statusF !== "all" && r.status !== statusF) return false;
-    if (typeF !== "all" && r.type !== typeF) return false;
+    if (typeF   !== "all" && r.type   !== typeF)   return false;
     if (search && !r.number.includes(search) && !r.type.includes(search)) return false;
     return true;
   });
@@ -57,13 +56,12 @@ export default function RoomsPage() {
         </select>
       </div>
 
-      {/* Quick stats */}
       <div style={{ display: "flex", gap: 10, marginBottom: 22, flexWrap: "wrap" }}>
         {[
-          { lbl: "الكل", n: rooms.length, c: "var(--gold)" },
-          { lbl: "متاحة", n: rooms.filter(r => r.status === "available").length, c: "var(--green)" },
-          { lbl: "مشغولة", n: rooms.filter(r => r.status === "occupied").length, c: "var(--red)" },
-          { lbl: "صيانة", n: rooms.filter(r => r.status === "maintenance").length, c: "var(--amber)" },
+          { lbl: "الكل",    n: rooms.length,                                          c: "var(--gold)"  },
+          { lbl: "متاحة",   n: rooms.filter(r => r.status === "available").length,    c: "var(--green)" },
+          { lbl: "مشغولة",  n: rooms.filter(r => r.status === "occupied").length,     c: "var(--red)"   },
+          { lbl: "صيانة",   n: rooms.filter(r => r.status === "maintenance").length,  c: "var(--amber)" },
         ].map(s => (
           <div key={s.lbl} style={{ background: "var(--panel2)", border: `1px solid ${s.c}28`, borderRadius: 8, padding: "8px 16px", display: "flex", alignItems: "center", gap: 8 }}>
             <span style={{ fontSize: 20, fontWeight: 800, color: s.c }}>{s.n}</span>
@@ -72,17 +70,15 @@ export default function RoomsPage() {
         ))}
       </div>
 
-      {/* Room cards grid */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(260px,1fr))", gap: 18 }}>
         {filtered.map(room => {
           const sc = statusCfg[room.status];
           const tc = typeColor[room.type] || "#888";
           return (
-            <div key={room.id} className="card" style={{ borderColor: tc + "20", transition: "transform .2s,box-shadow .2s", cursor: "default" }}
+            <div key={room.id} className="card" style={{ borderColor: tc + "20", transition: "transform .2s,box-shadow .2s" }}
               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = `0 10px 32px ${tc}18`; }}
               onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "none"; }}>
-              
-              {/* Visual */}
+
               <div style={{ height: 100, background: `linear-gradient(135deg,${tc}18,${tc}0a)`, border: `1px solid ${tc}22`, borderRadius: 9, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 44, marginBottom: 14 }}>
                 {roomEmoji[room.id] || "🛏️"}
               </div>

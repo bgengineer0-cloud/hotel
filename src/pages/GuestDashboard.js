@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { db } from "../database/db";
 
-
 export default function GuestDashboard() {
   const { user } = useAuth();
   const bookings  = db.getBookingsByUser(user.id);
@@ -13,7 +12,6 @@ export default function GuestDashboard() {
 
   return (
     <div>
-      {/* Hero welcome */}
       <div style={{ background: "linear-gradient(135deg,var(--panel),var(--panel2))", border: "1px solid var(--border)", borderRadius: "var(--rl)", padding: "28px 30px", marginBottom: 26, position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: -30, left: -30, width: 180, height: 180, borderRadius: "50%", background: "radial-gradient(circle,rgba(201,168,76,.07) 0%,transparent 70%)", pointerEvents: "none" }} />
         <h1 style={{ fontSize: 24, fontWeight: 800, marginBottom: 6 }}>مرحباً، <span style={{ color: "var(--gold)" }}>{user.name}</span> 👋</h1>
@@ -26,7 +24,6 @@ export default function GuestDashboard() {
         </div>
       </div>
 
-      {/* Stats */}
       <div className="g4" style={{ marginBottom: 24 }}>
         {[
           { icon: "📋", val: bookings.length, lbl: "إجمالي الحجوزات", c: "var(--gold)" },
@@ -42,7 +39,6 @@ export default function GuestDashboard() {
       </div>
 
       <div className="g2">
-        {/* Upcoming bookings */}
         <div className="card">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
             <span style={{ fontSize: 14, fontWeight: 700 }}>📅 الحجوزات القادمة</span>
@@ -70,7 +66,6 @@ export default function GuestDashboard() {
           })}
         </div>
 
-        {/* Available rooms preview */}
         <div className="card">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
             <span style={{ fontSize: 14, fontWeight: 700 }}>🛏️ غرف متاحة</span>
