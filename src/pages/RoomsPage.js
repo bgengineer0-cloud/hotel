@@ -17,11 +17,11 @@ const roomEmoji  = { 1:"🛏️", 2:"🏨", 3:"👑", 4:"🛏️", 5:"🏨", 6:"
 
 export default function RoomsPage() {
   const { user } = useAuth();
-  const navigate  = useNavigate();
+  //const navigate  = useNavigate();
   const [statusF, setStatusF] = useState("all");
   const [typeF, setTypeF]     = useState("all");
   const [search, setSearch]   = useState("");
-  const [rooms, setRooms]     = useState(db.getAllRooms());
+  const [rooms] = useState(db.getAllRooms());
 
   const types = [...new Set(rooms.map(r => r.type))];
 

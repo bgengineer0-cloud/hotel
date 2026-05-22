@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { db } from "../database/db";
 
-const bStatusCls = { confirmed: "b-green", pending: "b-amber", cancelled: "b-red" };
-const bStatusLbl = { confirmed: "مؤكد", pending: "انتظار", cancelled: "ملغي" };
 
 export default function GuestDashboard() {
   const { user } = useAuth();
